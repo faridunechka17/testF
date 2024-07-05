@@ -1,42 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Header from "./components/header/Header";
+import Main from "./pages/Main";
+import Menu from "./pages/Menu";
+import User from "./pages/User";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-const RegistrationForm = () => {
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
-    const [regis, setRegis] = useState(false)
-    const [error, setError] = useState('')
-
-    const userRegis = () => {
-        if (!username || !password || !confirmPassword) {
-            setError('');
-            return alert('заполните все поля!')
-        }else if (password !== confirmPassword) {
-            setError('');
-            return alert('пароли должны совпадать')
-        }else if (regis) {
-            setError('');
-            return alert('такой пользователь уже существует')
-        }else {
-            setRegis(true);
-            setError('');
-            alert('успешно прошли регистрацию!');
-        }
-    };
-
+const App = () => {
     return (
-        <div>
-            <div>
-                <input onChange={(e) => setUsername(e.target.value)} type="text" placeholder="имя пользователя" value={username}/>
-                <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="пароль" value={password}/>
-                <input onChange={(e) => setConfirmPassword(e.target.value)} type="password" placeholder="подтвердите пароль" value={confirmPassword}/>
-
-                <button onClick={userRegis}>регистрация</button>
-            </div>
-            {error && <p>{error}</p>}
-
-        </div>
+        <Router>
+            <Header />
+            <Routes>
+                <Route path="/page1" element={<Main/>} />
+                <Route path="/page2" element={<Menu/>} />
+                <Route path="/page3" element={<User/>} />
+                <Route path="*" element={<Main/>} />
+            </Routes>
+        </Router>
     );
 };
 
-export default RegistrationForm;
+export default App;
